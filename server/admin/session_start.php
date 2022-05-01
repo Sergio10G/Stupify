@@ -1,4 +1,4 @@
-<?php // Modulo de sesión
+<?php
         define('ACCESS_TOKEN', '!!access1@admin');
 
         if(isset($_POST['token'])){

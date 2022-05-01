@@ -41,7 +41,7 @@
             ';
         }
         else {
-            echo "sesion iniciada";
+            require_once "./admin.php";
         }
     ?>
 </body>
