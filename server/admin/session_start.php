@@ -14,7 +14,7 @@
             $_SESSION["sesion_iniciada"] = false;
         }
         
-        if($token !== null && $access_token == ACCESS_TOKEN){
+        if($token !== null && $token == ACCESS_TOKEN){
             $_SESSION["sesion_iniciada"] = true;
         }
     ?>

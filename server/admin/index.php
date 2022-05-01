@@ -30,7 +30,7 @@
                     <div class="row">
                         <center><h1>ACCESO DE ADMINISTRACIÓN</h1></center>
                     </div>
-                    <form method="POST" action="admin.php" enctype="multipart/form-data">
+                    <form method="POST" action="index.php" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="token" class="form-label">Token</label>
                             <input name="token" type="password" class="form-control" id="token" required>
