@@ -14,9 +14,9 @@
     echo '
         <div id="header">
             <form method="POST" action="admin.php" enctype="multipart/form-data">
-                <button type="button" class="btn btn-primary" name="chosen_tab" value="diagnostic">Diagnóstico</button>
-                <button type="button" class="btn btn-primary" name="chosen_tab" value="upload">Subida</button>
-                <button type="button" class="btn btn-primary" name="chosen_tab" value="categories">Categorías</button>
+                <button type="submit" class="btn btn-primary" name="chosen_tab" value="diagnostic">Diagnóstico</button>
+                <button type="submit" class="btn btn-primary" name="chosen_tab" value="upload">Subida</button>
+                <button type="submit" class="btn btn-primary" name="chosen_tab" value="categories">Categorías</button>
             </form>
         </div>
     ';
