@@ -41,7 +41,7 @@
             ';
         }
         else {
-            require_once "./admin.php";
+            header("location: ./admin.php");
         }
     ?>
 </body>
