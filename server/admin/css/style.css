@@ -1,0 +1,87 @@
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#container > * {
+    width: 100%;
+}
+
+#header {
+    height: 5%;
+}
+
+#form-header {
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#form-header > * {
+    margin-left: 0.5em;
+}
+
+#main {
+    height: 85%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#main > * {
+    width: 80%;
+}
+
+#msg {
+    width: 100%;
+    height: 5%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#category {
+    width: 25%;
+    height: 2em;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+#category > * {
+    margin-right: 1em;
+}
+
+#form-subida {
+    width: 100%;
+    height: 100%;
+}
+
+#footer {
+    height: 10%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -20,13 +19,13 @@
         // $_POST['token']: Token que el usuario envía con la petición POST.
         // $_SESSION['sesion_iniciada]: Booleano que controla si se ha iniciado sesión.
         
-        require_once "./session_start.php";
+        require_once "./controller/session_start.php";
 
         // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        $_SESSION['sesion_iniciada'] = true;
+        //$_SESSION['sesion_iniciada'] = true;
     ?>
 
     <?php 
@@ -47,7 +46,7 @@
             ';
         }
         else {
-            header("location: ./admin.php");
+            header("location: ./pages/admin.php");
         }
     ?>
 </body>
