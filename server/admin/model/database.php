@@ -1,6 +1,6 @@
 <?php
     use Kreait\Firebase\Factory;
-    require './vendor/autoload.php';
+    require '../vendor/autoload.php';
 
     class Database {
         public $factory;
