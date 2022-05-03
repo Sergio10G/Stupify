@@ -72,10 +72,10 @@
     
         
         if ($repeatedSong) {
-            header('location: ./admin.php?chosen_tab=upload&msg=<span class="text-danger">La canción seleccionada ya existe en el servidor.</span>');
+            header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-danger">La canción seleccionada ya existe en el servidor.</span>');
         }
         else if ($repeatedPhoto) {
-            header('location: ./admin.php?chosen_tab=upload&msg=<span class="text-danger">La foto seleccionada ya existe en el servidor.</span>');
+            header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-danger">La foto seleccionada ya existe en el servidor.</span>');
         }
         else {
             $id = $db->getLastSongId() + 1;
@@ -85,10 +85,10 @@
             if ($db->insertSong($song)) {
                 move_uploaded_file($audiofile['tmp_name'], "/stupify/res/songs/".$audiofile['name']);
                 move_uploaded_file($photo['tmp_name'], "/stupify/res/img/".$photo['name']);
-                header('location: ./admin.php?chosen_tab=upload&msg=<span class="text-success">Canción subida con éxito.</span>');
+                header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-success">Canción subida con éxito.</span>');
             }
             else {
-                header('location: ./admin.php?chosen_tab=upload&msg=<span class="text-danger">Error en el acceso a la base de datos.</span>');
+                header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-danger">Error en el acceso a la base de datos.</span>');
             }
         }
     }
