@@ -17,17 +17,6 @@
         <div id="main" class="border-bottom">
 <?php
 
-function songHasCategory($songId, $songCats, $categoryId) {
-    $hasCategory = false;
-    foreach ($songCats as $key => $songCat) {
-        if ($songCat->catId == intval($categoryId) && $songCat->songId == $songId) {
-            $hasCategory = true;
-            break;
-        }
-    }
-    return $hasCategory;
-}
-
 session_start();
 
 if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_GET['categoryId'])) {
@@ -36,6 +25,7 @@ if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_GET['category
 else {
     require_once "../model/classes.php";
     require_once "../model/database.php";
+    require_once "../model/utils.php";
     
     $categoryId = $_GET['categoryId'];
     $categories = $db->getCategories();

@@ -83,7 +83,9 @@
                     $db->pushSongCat($sc);
                 }
                 move_uploaded_file($audiofile['tmp_name'], "/stupify/res/songs/".$audiofile['name']);
-                move_uploaded_file($photo['tmp_name'], "../img/".$photo['name']);
+                move_uploaded_file($photo['tmp_name'], "/stupify/res/img/".$photo['name']);
+                $out = [];
+                exec("ln -s /stupify/res/img/".$photo['name']." ../img/".$photo['name'], $out);
                 header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-success">Canción subida con éxito.</span>');
             }
             else {

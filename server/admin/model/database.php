@@ -10,7 +10,7 @@
         public function __construct()
         {
             $this->factory = (new Factory)
-                 ->withServiceAccount('/stupify/etc/stupify-360f5-firebase-adminsdk-6fz48-1c2f019b1b.json')
+                 ->withServiceAccount('/stupify/etc/stupify-360f5-firebase-adminsdk-6fz48-87dc04ce2e.json')
                  ->withDatabaseUri('https://stupify-360f5-default-rtdb.europe-west1.firebasedatabase.app/');
             $this->realtimeDatabase = $this->factory->createDatabase();
         }
@@ -114,7 +114,7 @@
             return $songCats;
         }
 
-        public function deleteSongCats($categoryId) {
+        public function deleteSongCatsFromCat($categoryId) {
             $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
             foreach ($scs as $key => $sc) {
                 if ($sc['catId'] == $categoryId) {
@@ -123,9 +123,23 @@
             }
         }
 
+        public function deleteSongCatsFromSong($songId) {
+            $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
+            foreach ($scs as $key => $sc) {
+                if ($sc['songId'] == $songId) {
+                    $this->realtimeDatabase->getReference('/stupifyDB/song-cat/'.$key)->remove();
+                }
+            }
+        }
+
         public function deleteCategory($categoryId) {
-            $this->deleteSongCats($categoryId);
+            $this->deleteSongCatsFromCat($categoryId);
             $this->realtimeDatabase->getReference('/stupifyDB/categories/'.$categoryId)->remove();
+        }
+
+        public function deleteSong($songId) {
+            $this->deleteSongCatsFromSong($songId);
+            $this->realtimeDatabase->getReference('/stupifyDB/songs/'.$songId)->remove();
         }
     }
     

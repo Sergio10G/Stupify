@@ -26,7 +26,7 @@ else {
     
     if ($submit == 1) {
         if ($categoryId != null) {
-            $db->deleteSongCats(intval($categoryId));
+            $db->deleteSongCatsFromCat(intval($categoryId));
             if (count($songs) > 0) {
                 foreach ($songs as $songId) {
                     $sc = new SongCat(intval($songId), intval($categoryId));

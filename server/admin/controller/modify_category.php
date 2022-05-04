@@ -11,11 +11,14 @@ if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_POST['submit'
 else {
     $option = $_POST['submit'];
 
-    if (substr($option, 0, 1) == "0") {
-        $id = substr($option, 2, 1);
+    $access = substr($option, 0, 1);
+    $id = substr($option, 2, 1);
+
+    if ($access == "0") {
+        
         header('location: ../pages/add_song_categories.php?categoryId='.$id);
     }
-    else if (substr($option, 0, 1) == "1") {
+    else if ($access == "1") {
         $id = substr($option, 2, 1);
         $db->deleteCategory(intval($id));
         header('location: ../pages/admin.php?chosen_tab=categories&msg=<span class="text-success">Categoría eliminada.</span>');

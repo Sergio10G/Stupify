@@ -1,5 +1,6 @@
 <?php
 $songs = $db->getSongs();
+$songCats = $db->getSongCats();
 
 echo '
 <h1 class="mb-3">Listado de canciones</h1>
@@ -15,11 +16,22 @@ foreach ($songs as $song) {
             <span id="song-data-author">'.$song->author.'</span>
         </div>
         <div id="song-categories">
-
+    ';
+    $category = null;
+    foreach ($songCats as $key => $songCat) {
+        if ($songCat->songId == $song->id) {
+            $category = $db->getCategory($songCat->catId);
+            if ($category != null) {
+                echo '<div id="song-category" class="border">'.$category->category.'</div>';
+            }
+        }
+    }
+    
+    echo '
         </div>
         <div id="song-options">
-            <button type="submit" class="btn btn-warning" name="submit" value="1">Modificar</button>
-            <button type="submit" class="btn btn-danger" name="submit" value="2">Eliminar</button>
+            <button type="submit" class="btn btn-warning" name="submit" value="0-'.$song->id.'">Modificar</button>
+            <button type="submit" class="btn btn-danger" name="submit" value="1-'.$song->id.'">Eliminar</button>
         </div>
     </div>
     
