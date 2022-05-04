@@ -18,6 +18,9 @@
         echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
     }
     else {
+        require_once '../model/classes.php';
+        require_once '../model/database.php';
+
         if (isset($_GET['chosen_tab'])) {
             $chosen_tab = $_GET['chosen_tab'];
         }
@@ -95,75 +98,15 @@
                 break;
                 
             case 'upload':
-                echo '
-                <h1 class="mb-3">Subida de canción</h1>
-                <form method="POST" action="../controller/upload_song.php" enctype="multipart/form-data" id="form-upload">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" name="title" placeholder="Título" required>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" name="author" placeholder="Autor" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label class="form-label">Categorías</label>
-                            <div class="input-group border mb-3">
-                                <div id="category">
-                                    <label>Categoría 1</label>
-                                    <input class="form-check-input" name="categories[]" type="checkbox" value="1">
-                                </div>
-                                <div id="category">
-                                    <label>Categoría 2</label>
-                                    <input class="form-check-input" name="categories[]" type="checkbox" value="2">
-                                </div>
-                                <div id="category">
-                                    <label>Categoría 3</label>
-                                    <input class="form-check-input" name="categories[]" type="checkbox" value="3">
-                                </div>
-                                <div id="category">
-                                    <label>Categoría 4</label>
-                                    <input class="form-check-input" name="categories[]" type="checkbox" value="4">
-                                </div>
-                                <div id="category">
-                                    <label>Categoría 5</label>
-                                    <input class="form-check-input" name="categories[]" type="checkbox" value="5">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-5">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Foto</label>
-                                <input class="form-control" type="file" name="photo" accept=".jpg">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <label class="form-label">Archivo de audio</label>
-                                <input class="form-control" type="file" name="audiofile" accept="audio/wav">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button type="submit" class="btn btn-success" name="submit" value="1">Subir canción</button>
-                    </div>
-                </form>
-                ';
+                require_once '../view/view_upload_song.php';
                 break;
 
             case 'songs':
-                echo 'CANCIONES';
+                require_once '../view/view_songs.php';
                 break;
             
             case 'categories':
-                echo 'CATEGORIAS';
+                require_once '../view/view_categories.php';
                 break;
             
             default:
@@ -172,20 +115,18 @@
         }
         echo '
             </div>
-        ';
-    
-        // Footer
-        echo '
             <div id="footer">
-                <span>Developed by Sergio Díez García</span>
-                <form method="POST" action="../controller/session_end.php" enctype="multipart/form-data">
-                    <input type="hidden" name="called" value="1">
-                    <button type="submit" class="btn btn-danger">Cerrar sesión</button>
-                </form>
-            </div>
+            <span>Developed by Sergio Díez García © 2022</span>
+            <form method="POST" action="../controller/session_end.php" enctype="multipart/form-data">
+                <input type="hidden" name="called" value="1">
+                <button type="submit" class="btn btn-danger">Cerrar sesión</button>
+            </form>
+        </div>
         ';
+
     }  
 ?>
+        
     </div>
 </body>
 </html>

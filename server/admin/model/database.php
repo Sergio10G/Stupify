@@ -1,6 +1,7 @@
 <?php
     use Kreait\Firebase\Factory;
     require '../vendor/autoload.php';
+    require_once '../model/classes.php';
 
     class Database {
         public $factory;
@@ -26,6 +27,18 @@
             }
         }
 
+        public function getLastCategoryId() {
+            $songsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
+            $songsSnap = $songsRef->getSnapshot();
+            if (!$songsSnap->hasChildren()) {
+                return 0;
+            }
+            else {
+                $keys = $songsRef->getChildKeys();
+                return $keys[count($keys) - 1];
+            }
+        }
+
         public function insertSong(Song $song) {
             $songsRef = $this->realtimeDatabase->getReference('/stupifyDB/songs');
             $ret = $songsRef->getChild($song->id)->set($song);
@@ -35,6 +48,84 @@
             else {
                 return false;
             }
+        }
+
+        public function getSongs() {
+            $songsRef = $this->realtimeDatabase->getReference('/stupifyDB/songs');
+            $dbSongs = $songsRef->getValue();
+            $songs = [];
+
+            foreach ($dbSongs as $key => $s) {
+                if ($s != null) {
+                    $song = new Song($s['id'], $s['title'], $s['author'], $s['photo'], $s['audiofile']);
+                    array_push($songs, $song);
+                }
+            }
+            return $songs;
+        }
+
+        public function insertCategory(Category $category) {
+            $catsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
+            $ret = $catsRef->getChild($category->id)->set($category);
+            if ($ret !== null) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        public function pushSongCat(SongCat $sc) {
+            $scRef = $this->realtimeDatabase->getReference('/stupifyDB/song-cat');
+            $scRef->push($sc);
+        }
+
+        public function getCategories() {
+            $catsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
+            $dbCats = $catsRef->getValue();
+            $categories = [];
+
+            foreach ($dbCats as $key => $cat) {
+                if ($cat != null) {
+                    //$category = Category::fromJSON($cat);
+                    $category = new Category($cat["id"], $cat["category"]);
+                    array_push($categories, $category);
+                }
+            }
+            return $categories;
+        }
+
+        public function getCategory($categoryId) {
+            $cat = $this->realtimeDatabase->getReference('/stupifyDB/categories/'.$categoryId)->getValue();
+            $category = new Category($cat['id'], $cat['category']);
+            return $category;
+        }
+
+        public function getSongCats() {
+            $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
+            $songCats = [];
+            foreach ($scs as $key => $sc) {
+                $catId = $sc['catId'];
+                $songId = $sc['songId'];
+                $songCat = new SongCat($songId, $catId);
+                $songCats[$key] = $songCat;
+                //array_push($songCats, $songCat);
+            }
+            return $songCats;
+        }
+
+        public function deleteSongCats($categoryId) {
+            $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
+            foreach ($scs as $key => $sc) {
+                if ($sc['catId'] == $categoryId) {
+                    $this->realtimeDatabase->getReference('/stupifyDB/song-cat/'.$key)->remove();
+                }
+            }
+        }
+
+        public function deleteCategory($categoryId) {
+            $this->deleteSongCats($categoryId);
+            $this->realtimeDatabase->getReference('/stupifyDB/categories/'.$categoryId)->remove();
         }
     }
     

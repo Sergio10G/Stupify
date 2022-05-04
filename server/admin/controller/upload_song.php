@@ -49,22 +49,17 @@
         $repeatedSong = false;
     
         foreach ($songs as $sng) {
-            echo $sng."<br>";
             if ($sng == $audiofile['name']) {
-                echo "ding";
                 $repeatedSong = true;
                 break;
             }
         }
 
-        echo "<hr>";
     
         $repeatedPhoto = false;
     
         foreach ($photos as $ph) {
-            echo $ph."<br>";
             if ($ph == $photo['name']) {
-                echo "ding";
                 $repeatedPhoto = true;
                 break;
             }
@@ -80,11 +75,15 @@
         else {
             $id = $db->getLastSongId() + 1;
 
-            $song = new Song($id, $title, $author, $categories, $photo['name'], $audiofile['name']);
+            $song = new Song($id, $title, $author, $photo['name'], $audiofile['name']);
 
             if ($db->insertSong($song)) {
+                foreach ($categories as $category) {
+                    $sc = new SongCat($id, intval($category));
+                    $db->pushSongCat($sc);
+                }
                 move_uploaded_file($audiofile['tmp_name'], "/stupify/res/songs/".$audiofile['name']);
-                move_uploaded_file($photo['tmp_name'], "/stupify/res/img/".$photo['name']);
+                move_uploaded_file($photo['tmp_name'], "../img/".$photo['name']);
                 header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-success">Canción subida con éxito.</span>');
             }
             else {
