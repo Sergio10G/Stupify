@@ -3,7 +3,7 @@
 function songHasCategory($songId, $songCats, $categoryId) {
     $hasCategory = false;
     foreach ($songCats as $key => $songCat) {
-        if ($songCat->catId == intval($categoryId) && $songCat->songId == $songId) {
+        if ($songCat->catId == $categoryId && $songCat->songId == $songId) {
             $hasCategory = true;
             break;
         }

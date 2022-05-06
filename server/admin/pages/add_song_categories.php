@@ -56,7 +56,7 @@ else {
                     <div id="song-item">
                         <label>'.$song->author.' - '.$song->title.'</label>
                         <input class="form-check-input" name="songs[]" type="checkbox" value="'.$song->id.'"';
-                        if (songHasCategory($song->id, $songCats, $categoryId)) {
+                        if (songHasCategory($song->id, $songCats, intval($categoryId))) {
                             echo 'checked';
                         }
                         echo '>

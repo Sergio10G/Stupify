@@ -101,6 +101,12 @@
             return $category;
         }
 
+        public function getSong($songId) {
+            $sng = $this->realtimeDatabase->getReference('/stupifyDB/songs/'.$songId)->getValue();
+            $song = new Song($sng['id'], $sng['title'], $sng['author'], $sng['photo'], $sng['audiofile']);
+            return $song;
+        }
+
         public function getSongCats() {
             $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
             $songCats = [];

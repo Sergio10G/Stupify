@@ -4,7 +4,7 @@ $songCats = $db->getSongCats();
 
 echo '
 <h1 class="mb-3">Listado de canciones</h1>
-<form method="POST" action="../controller/modify_song.php" enctype="multipart/form-data" id="form-songs">
+<form method="POST" action="../controller/song_actions.php" enctype="multipart/form-data" id="form-songs">
     <div class="input-group border" id="form-songs-list">
 ';
 foreach ($songs as $song) {
