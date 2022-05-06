@@ -36,4 +36,25 @@
             $this->catId = $catId;
         }
     }
+
+    class Diagnostic{
+        public $timestamp;
+        public $apache_status;
+
+        public function __construct($timestamp, $apache_status) {
+            $this->timestamp = $timestamp;
+            $this->apache_status = $apache_status;
+        }
+
+        public static function fromJSON($json) {
+            $arr = json_decode($json);
+            if ($arr != null) {
+                $obj = new Diagnostic($arr->timestamp, $arr->apache_status);
+                return $obj;
+            }
+            else {
+                return null;
+            }
+        }
+    }
 ?>
