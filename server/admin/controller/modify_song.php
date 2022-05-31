@@ -86,10 +86,10 @@
                     exec("rm -f /stupify/res/songs/".$prevSong->audiofile);
                     move_uploaded_file($audiofile['tmp_name'], "/stupify/res/songs/".$audiofile['name']);
                 }
-                header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-success">Canción actualizada con éxito.</span>');
+                header('location: ../pages/admin.php?chosen_tab=songs&msg=<span class="text-success">Canción actualizada con éxito.</span>');
             }
             else {
-                header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-danger">Error en el acceso a la base de datos.</span>');
+                header('location: ../pages/admin.php?chosen_tab=songs&msg=<span class="text-danger">Error en el acceso a la base de datos.</span>');
             }
         }
         else if ($access == 1) {

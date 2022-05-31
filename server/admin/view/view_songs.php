@@ -18,13 +18,18 @@ foreach ($songs as $song) {
         <div id="song-categories">
     ';
     $category = null;
+    $uncategorized = true;
     foreach ($songCats as $key => $songCat) {
         if ($songCat->songId == $song->id) {
             $category = $db->getCategory($songCat->catId);
             if ($category != null) {
+                $uncategorized = false;
                 echo '<div id="song-category" class="border">'.$category->category.'</div>';
             }
         }
+    }
+    if ($uncategorized) {
+        echo '<div id="song-category" class="border border-danger text-danger">Sin categorizar</div>';
     }
     
     echo '

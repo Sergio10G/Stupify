@@ -2,6 +2,7 @@
     use Kreait\Firebase\Factory;
     require '../vendor/autoload.php';
     require_once '../model/classes.php';
+    require_once '../model/utils.php';
 
     class Database {
         public $factory;
@@ -23,19 +24,19 @@
             }
             else {
                 $keys = $songsRef->getChildKeys();
-                return $keys[count($keys) - 1];
+                return returnBiggestNumber($keys);
             }
         }
 
         public function getLastCategoryId() {
-            $songsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
-            $songsSnap = $songsRef->getSnapshot();
-            if (!$songsSnap->hasChildren()) {
+            $catsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
+            $catsSnap = $catsRef->getSnapshot();
+            if (!$catsSnap->hasChildren()) {
                 return 0;
             }
             else {
-                $keys = $songsRef->getChildKeys();
-                return $keys[count($keys) - 1];
+                $keys = $catsRef->getChildKeys();
+                return returnBiggestNumber($keys);
             }
         }
 

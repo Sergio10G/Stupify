@@ -31,6 +31,7 @@ else {
         if ($category != null && $category != "") {
             $id = $db->getLastCategoryId() + 1;
             $cat = new Category($id, $category);
+            //var_dump($cat);
             if ($db->insertCategory($cat)) {
                 header('location: ../pages/admin.php?chosen_tab=categories&msg=<span class="text-success">Categoría insertada con éxito.</span>');
             }
@@ -44,7 +45,7 @@ else {
     }
     else {
         header('location: ../pages/admin.php?chosen_tab=categories&msg=<span class="text-danger">La categoría introducida ya existe.</span>');
+    }    
     }
-}
 
 ?>

@@ -94,41 +94,7 @@
         ';
         switch ($chosen_tab) {
             case 'diagnostic':
-                echo '
-                <h1 class="mb-3">Diagnóstico del servidor</h1>
-                <form method="POST" action="../controller/diagnostic.php" enctype="multipart/form-data">
-                ';
-                $file = file_get_contents("/stupify/diagnostic.json");
-                $diag = Diagnostic::fromJSON($file);
-
-                $dateDiag = date_create_from_format('U', intval($diag->timestamp));
-                $dateNow = date_create_from_format('U', time());
-                $diff = (array) date_diff($dateDiag, $dateNow);
-                
-                echo '
-                <div class="row mb-3">
-                    <div class="col">
-                        <button type="submit" name="submit" value="1" class="btn btn-primary">Realizar diagnóstico</button>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        Último diagnóstico hace <span class="fw-bold">'.$diff['h'].' horas, '.$diff['i'].' minutos y '.$diff['s'].' segundos.</span>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <div class="mb-3">
-                            <span class="fw-bold me-1">Estado del servidor apache:</span>
-                            <span class="text-'.($diag->apache_status == "active" ? "success" : "danger").'">'.$diag->apache_status.'</span>
-                        </div>
-                    </div>
-                </div>
-                ';
-                
-                echo '
-                </form>
-                ';
+                require_once '../view/view_diagnostic.php';
                 break;
                 
             case 'upload':
