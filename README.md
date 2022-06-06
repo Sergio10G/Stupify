@@ -3,7 +3,7 @@
 
 ### Menú de navegación
 1. [Archivos del servidor](https://github.com/Sergio10G/Stupify/tree/main/server)
-··1. [Sistema gestor de contenido (CMS)](https://github.com/Sergio10G/Stupify/tree/main/server/admin)
+..1. [Sistema gestor de contenido (CMS)](https://github.com/Sergio10G/Stupify/tree/main/server/admin)
 2. Archivos del cliente
 
 ### Resumen
