@@ -6,3 +6,5 @@ Este es el directorio principal de los archivos del servidor. Aquí se encontrar
 
 - **[admin](https://github.com/Sergio10G/Stupify/tree/main/server/admin)**: El directorio donde se guarda el sistema gestor de contenido (CMS) el cual utilizamos para administrar las canciones del servidor, así como para recibir un diagnóstico del mismo.
 - **[scripts](https://github.com/Sergio10G/Stupify/tree/main/server/scripts)**: Un directorio que almacena los scripts que utilizará nuestro servidor para realizar algunas tareas de forma automática.
+
+[Volver al inicio](https://www.github.com/Sergio10G/Stupify)
