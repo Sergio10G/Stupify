@@ -5,6 +5,7 @@
    - [Sistema gestor de contenido (CMS)](https://github.com/Sergio10G/Stupify/tree/main/server/admin)
    - [Scripts del servidor](https://github.com/Sergio10G/Stupify/tree/main/server/scripts)
 2. [Archivos del cliente](https://github.com/Sergio10G/Stupify/tree/main/client)
+   - [Aplicación de cliente (Android)](https://github.com/Sergio10G/Stupify/tree/main/client/StupifyClient)
 
 ### Resumen
 
