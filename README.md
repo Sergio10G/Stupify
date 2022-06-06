@@ -1,5 +1,4 @@
-# Stupify
-## Un servicio de streaming de música
+# Stupify: Un servicio de streaming de música 
 
 ### Menú de navegación
 1. [Archivos del servidor](https://github.com/Sergio10G/Stupify/tree/main/server)
