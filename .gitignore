@@ -1,2 +1,3 @@
-./server/admin/img/*
+./server/admin/img
+./server/admin/songs
 *.jpg
