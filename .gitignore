@@ -1,3 +1,4 @@
-./server/admin/img
-./server/admin/songs
+*.jpg
+*.png
+*.wav
 *.jpg
