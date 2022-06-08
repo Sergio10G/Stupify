@@ -1,5 +1,6 @@
 package com.example.stupify_client.model;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class FirebaseDAO {
     private static FirebaseDAO instance;
@@ -22,10 +23,29 @@ public class FirebaseDAO {
     private static final DatabaseReference songsRef = db.getReference("stupifyDB/songs");
     private static final DatabaseReference metadataRef = db.getReference("stupifyDB/metadata");
 
-    private static final ArrayList<Category> categories = new ArrayList<>();
-    private static final ArrayList<SongCat> songCats = new ArrayList<>();
-    private static final ArrayList<Song> songs = new ArrayList<>();
-    private static Metadata metadata;
+    private final BitmapDownloadCallback bmDownloadCallback = new BitmapDownloadCallback() {
+        @Override
+        public void processFinished(HashMap<Integer, Bitmap> bitmaps) {
+            songPhotos.clear();
+            songPhotos.putAll(bitmaps);
+            Log.d("DL", "Song images downloaded");
+        }
+
+        @Override
+        public void processFailed(String errorMsg) {
+            Log.e("DL", "Error downloading song images: " + errorMsg);
+        }
+    };
+
+    private boolean songsReady = false;
+    private boolean mdReady = false;
+    private boolean alreadyDownloaded = false;
+
+    private final ArrayList<Category> categories = new ArrayList<>();
+    private final ArrayList<SongCat> songCats = new ArrayList<>();
+    private final ArrayList<Song> songs = new ArrayList<>();
+    private final HashMap<Integer, Bitmap> songPhotos = new HashMap<>();
+    private Metadata metadata;
 
     private FirebaseDAO() {
         categoriesRef.addValueEventListener(new ValueEventListener() {
@@ -36,10 +56,13 @@ public class FirebaseDAO {
                     Category cat = ds.getValue(Category.class);
                     categories.add(cat);
                 }
+                Log.d("DB", "Categories read");
+                /*
                 Log.d("D", "Values from categories: ");
                 for (Category cat: categories) {
                     Log.d("D", cat.toString());
                 }
+                */
             }
 
             @Override
@@ -56,10 +79,13 @@ public class FirebaseDAO {
                     SongCat sc = ds.getValue(SongCat.class);
                     songCats.add(sc);
                 }
+                Log.d("DB", "SongCats read");
+                /*
                 Log.d("D", "Values from song-cat: ");
                 for (SongCat sc: songCats) {
                     Log.d("D", sc.toString());
                 }
+                */
             }
 
             @Override
@@ -71,15 +97,22 @@ public class FirebaseDAO {
         songsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                songsReady = false;
+                alreadyDownloaded = false;
                 songs.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Song s = ds.getValue(Song.class);
                     songs.add(s);
                 }
+                Log.d("DB", "Songs read");
+                /*
                 Log.d("D", "Values from songs: ");
                 for (Song s: songs) {
                     Log.d("D", s.toString());
                 }
+                */
+                songsReady = true;
+                downloadBmIfReady();
             }
 
             @Override
@@ -91,8 +124,16 @@ public class FirebaseDAO {
         metadataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mdReady = false;
+                alreadyDownloaded = false;
                 metadata = dataSnapshot.getValue(Metadata.class);
-                Log.d("D", "Value from metadata: " + metadata.toString());
+                Log.d("DB", "Metadata read");
+                if (metadata.getServerIP().equals("127.0.0.1")) {
+                    metadata.setServerIP("10.0.2.2");
+                }
+                // Log.d("D", "Value from metadata: " + metadata.toString());
+                mdReady = true;
+                downloadBmIfReady();
             }
 
             @Override
@@ -155,6 +196,39 @@ public class FirebaseDAO {
             }
         }
         return songsByCat;
+    }
+
+    public void downloadBmIfReady() {
+        if (songsReady && mdReady && !alreadyDownloaded) {
+            alreadyDownloaded = true;
+            BitmapDownloadAsync bda = new BitmapDownloadAsync(bmDownloadCallback,
+                    metadata.getServerIP(),
+                    songs);
+            bda.execute();
+        }
+    }
+
+    public HashMap<Integer, Bitmap> getSongPhotos() {
+        return songPhotos;
+    }
+
+    public Bitmap getSongPhotoById(int id) {
+        if (songPhotos.size() == 0) {
+            return null;
+        }
+        else {
+            boolean contained = false;
+            for (int songId : songPhotos.keySet()) {
+                if (songId == id) {
+                    contained = true;
+                    break;
+                }
+            }
+            if (!contained) {
+                return null;
+            }
+        }
+        return songPhotos.get(id);
     }
 
 }

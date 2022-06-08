@@ -16,20 +16,19 @@
 package com.example.stupify_client
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stupify_client.databinding.ActivityPlayerBinding
-import com.example.stupify_client.model.*
+import com.example.stupify_client.model.FirebaseDAO
+import com.example.stupify_client.model.Song
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.MediaMetadata
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.DefaultMediaDescriptionAdapter
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.Util
@@ -51,6 +50,18 @@ class PlayerActivity : AppCompatActivity() {
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var player: ExoPlayer? = null
+    private var playerListener: Player.Listener = object: Player.Listener {
+
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+            super.onMediaItemTransition(mediaItem, reason)
+            if (bitmaps.size != 0) {
+                val index = Integer.valueOf(player!!.currentMediaItem!!.mediaId)
+                playerView.defaultArtwork = BitmapDrawable(resources, bitmaps[index])
+            }
+        }
+    }
+
+    private var bitmaps: HashMap<Int, Bitmap> = HashMap()
 
     private val viewBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityPlayerBinding.inflate(layoutInflater)
@@ -68,9 +79,6 @@ class PlayerActivity : AppCompatActivity() {
 
         val fbDAO = FirebaseDAO.getInstance()
         serverIP = intent.getStringExtra("serverIP")
-        if (serverIP == "127.0.0.1") {
-            serverIP = "10.0.2.2"
-        }
         songId = intent.getIntExtra("songId", -1)
         catId = intent.getIntExtra("catId", -1)
 
@@ -81,19 +89,16 @@ class PlayerActivity : AppCompatActivity() {
             playList.removeAt(0)
             playList.add(temp)
         }
-        /*
-        for (song in playList) {
-            val url = URL("http://" + serverIP + "/admin/img/" + song.photo);
-            val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-            photoList.add(song.id, BitmapDrawable(Resources.getSystem(), bmp))
-        }
-         */
+
+        bitmaps = fbDAO.songPhotos
     }
 
     override fun onStart() {
         super.onStart()
         if (player == null) {
             initializePlayer()
+            val index = Integer.valueOf(player!!.currentMediaItem!!.mediaId)
+            playerView.defaultArtwork = BitmapDrawable(resources, bitmaps[index])
         }
     }
 
@@ -142,7 +147,6 @@ class PlayerActivity : AppCompatActivity() {
                                 MediaMetadata.Builder()
                                         .setTitle(song.title)
                                         .setArtist(song.author)
-                                        .setArtworkUri(Uri.parse("http://" + serverIP + "/admin/img/" + song.photo))
                                         .build();
                         val mediaItem =
                                 MediaItem.Builder()
@@ -156,6 +160,7 @@ class PlayerActivity : AppCompatActivity() {
                     exoPlayer.seekTo(currentWindow, playbackPosition)
                     exoPlayer.prepare()
                 }
+        player!!.addListener(playerListener)
     }
 
     private fun releasePlayer() {
