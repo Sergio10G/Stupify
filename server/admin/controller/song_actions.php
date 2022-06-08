@@ -3,6 +3,8 @@ session_start();
 
 if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_POST['submit']) || $_POST[ 'submit'] == null){
     echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
+    echo '<h3>Redirigiendo a la página principal...</h3>';
+    header("Refresh:2; url=../");
 }
 else {
     require_once "../model/classes.php";
@@ -37,6 +39,7 @@ else {
             }
             else if ($access == "1") {
                 unlink("../img/".$song->photo);
+                unlink("../songs/".$song->audiofile);
                 exec("rm -f /stupify/res/img/".$song->photo);
                 exec("rm -f /stupify/res/songs/".$song->audiofile);
                 $db->deleteSong(intval($id));

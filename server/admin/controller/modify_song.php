@@ -3,6 +3,8 @@
 
     if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_POST['submit']) || $_POST[ 'submit'] == null){
         echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
+        echo '<h3>Redirigiendo a la página principal...</h3>';
+        header("Refresh:2; url=../");
     }
     else {
         require_once "../model/classes.php";
@@ -85,6 +87,9 @@
                 if ($audiofile != null) {
                     exec("rm -f /stupify/res/songs/".$prevSong->audiofile);
                     move_uploaded_file($audiofile['tmp_name'], "/stupify/res/songs/".$audiofile['name']);
+                    unlink("../songs/".$prevSong->audiofile);
+                    $out = [];
+                    exec("ln -s /stupify/res/songs/".$audiofile['name']." ../songs/".$audiofile['name'], $out);
                 }
                 header('location: ../pages/admin.php?chosen_tab=songs&msg=<span class="text-success">Canción actualizada con éxito.</span>');
             }

@@ -21,6 +21,8 @@ session_start();
 
 if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_GET['categoryId'])) {
     echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
+    echo '<h3>Redirigiendo a la página principal...</h3>';
+    header("Refresh:2; url=../");
 }
 else {
     require_once "../model/classes.php";
@@ -49,7 +51,7 @@ else {
         <form method="POST" action="../controller/add_categories_to_songs.php" enctype="multipart/form-data">
             <div class="row">
                 <label class="form-label">Canciones</label>
-                <div class="input-group border mb-3" id="song-list">
+                <div class="input-group border rounded mb-3" id="song-list">
         ';
         foreach ($songs as $song) {
             echo '

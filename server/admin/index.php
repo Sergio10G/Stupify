@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -21,27 +22,24 @@
         
         require_once "./controller/session_start.php";
 
-        // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // INICIO DE SESION AUTOMATICO. BORRAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //$_SESSION['sesion_iniciada'] = true;
     ?>
 
     <?php 
         if (!$_SESSION['sesion_iniciada']) {
             echo '
-                <div class="container border p-4 contenedor_padre" style="margin-top: 200px;">
-                    <div class="row">
-                        <center><h1>ACCESO DE ADMINISTRACIÓN</h1></center>
+                <div id="container-full">
+                    <div class="container p-4 border rounded" id="container-login">
+                        <img src="./img/stupify_logo_sombra.png" class="mb-4" alt="logo">
+                        <h1>SISTEMA GESTOR DE CONTENIDO</h1>
+                        <h2>ACCESO DE ADMINISTRACIÓN</h2>
+                        <form method="POST" action="index.php" enctype="multipart/form-data" id="login-form" class="p-2 border rounded">
+                            <div class="mb-3">
+                                <label for="token" class="form-label">Token</label>
+                                <input name="token" type="password" class="form-control" id="token" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
                     </div>
-                    <form method="POST" action="index.php" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label for="token" class="form-label">Token</label>
-                            <input name="token" type="password" class="form-control" id="token" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </form>
                 </div>
             ';
         }

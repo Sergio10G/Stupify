@@ -1,6 +1,8 @@
 body {
     width: 100vw;
     height: 100vh;
+
+    background: url("../img/seamless_pattern.jpg");
 }
 
 #container {
@@ -17,8 +19,33 @@ body {
     width: 100%;
 }
 
+#container-full {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#container-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+}
+
+#login-form {
+    width: 90%;
+}
+
 #header {
-    height: 5%;
+    height: 10%;
+
+    background-color: white;
 }
 
 #form-header {
@@ -28,23 +55,38 @@ body {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+
+    
 }
 
 #form-header > * {
     margin-left: 0.5em;
 }
 
+#logo-header {
+    height: 90%;
+    width: auto;
+}
+
 #main {
-    height: 85%;
+    height: 80%;
 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 #main > * {
     width: 80%;
+}
+
+#inner-main {
+    background-color: white;
+    padding: 2em;
+    max-height: 90%;
 }
 
 #msg {
@@ -180,7 +222,7 @@ body {
     width: max-content;
     height: max-content;
     
-    padding: 0.2em;
+    padding: 0.3em;
     margin: 0.3em;
     
     color: gray;
@@ -198,6 +240,7 @@ body {
 }
 
 #form-categories {
+    max-height: 70%;
     overflow: auto !important;
 }
 
@@ -208,4 +251,6 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+
+    background-color: white;
 }

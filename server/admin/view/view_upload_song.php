@@ -19,7 +19,7 @@ echo '
     <div class="row mb-3">
         <div class="col">
             <label class="form-label">Categorías</label>
-            <div class="input-group border mb-3" id="category-list">
+            <div class="input-group border rounded mb-3" id="category-list">
 ';
 foreach ($categories as $category) {
     echo '
@@ -43,7 +43,7 @@ echo '
         <div class="col">
             <div class="mb-3">
                 <label class="form-label">Archivo de audio</label>
-                <input class="form-control" type="file" name="audiofile" accept="audio/wav">
+                <input class="form-control" type="file" name="audiofile" accept="audio/wav, audio/mp3">
             </div>
         </div>
     </div>

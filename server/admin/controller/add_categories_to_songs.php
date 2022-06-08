@@ -6,6 +6,8 @@ session_start();
 
 if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_POST['submit']) || $_POST['submit'] == null){
     echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
+    echo '<h3>Redirigiendo a la página principal...</h3>';
+    header("Refresh:2; url=../");
 }
 else {
     $submit = $_POST['submit'];

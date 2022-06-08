@@ -3,9 +3,11 @@
     require_once "../model/database.php";
 
     session_start();
-    
+
     if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_POST['submit']) || $_POST['submit'] != "1"){
         echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
+        echo '<h3>Redirigiendo a la página principal...</h3>';
+        header("Refresh:2; url=../");
     }
     else {
         if(isset($_POST['title'])) {
@@ -86,6 +88,7 @@
                 move_uploaded_file($photo['tmp_name'], "/stupify/res/img/".$photo['name']);
                 $out = [];
                 exec("ln -s /stupify/res/img/".$photo['name']." ../img/".$photo['name'], $out);
+                exec("ln -s /stupify/res/songs/".$audiofile['name']." ../songs/".$audiofile['name'], $out);
                 header('location: ../pages/admin.php?chosen_tab=upload&msg=<span class="text-success">Canción subida con éxito.</span>');
             }
             else {

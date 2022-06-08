@@ -16,6 +16,8 @@ session_start();
 
 if (!isset($_SESSION) || !$_SESSION['sesion_iniciada'] || !isset($_GET['songId']) || $_GET['songId'] == null){
     echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
+    echo '<h3>Redirigiendo a la página principal...</h3>';
+    header("Refresh:2; url=../");
 }
 else {
     require_once "../model/classes.php";
@@ -32,7 +34,7 @@ else {
         echo '
         <div id="header">
         </div>
-        <div id="main" class="border">
+        <div id="main" class="border rounded">
             <h1 class="mb-3">Modificar información de la canción</h1>
             <form method="POST" action="../controller/modify_song.php" enctype="multipart/form-data">
                 <div class="row mb-3">
@@ -50,7 +52,7 @@ else {
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label">Categorías</label>
-                        <div class="input-group border mb-3" id="category-list">
+                        <div class="input-group border rounded mb-3" id="category-list">
         ';
         foreach ($categories as $category) {
             echo '

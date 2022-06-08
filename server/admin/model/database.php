@@ -16,7 +16,19 @@
             $this->realtimeDatabase = $this->factory->createDatabase();
         }
 
-        public function getLastSongId() {
+        public function getServerIp(): String {
+            $svipRef = $this->realtimeDatabase->getReference('/stupifyDB/metadata/serverIP');
+            $svip = $svipRef->getValue();
+            return $svip;
+        }
+
+        public function setServerIp(String $serverIP): String {
+            $svipRef = $this->realtimeDatabase->getReference('/stupifyDB/metadata/serverIP');
+            $ret = $svipRef->set($serverIP);
+            return ret !== null;
+        }
+
+        public function getLastSongId(): int {
             $songsRef = $this->realtimeDatabase->getReference('/stupifyDB/songs');
             $songsSnap = $songsRef->getSnapshot();
             if (!$songsSnap->hasChildren()) {
@@ -28,7 +40,7 @@
             }
         }
 
-        public function getLastCategoryId() {
+        public function getLastCategoryId(): int {
             $catsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
             $catsSnap = $catsRef->getSnapshot();
             if (!$catsSnap->hasChildren()) {
@@ -40,18 +52,13 @@
             }
         }
 
-        public function insertSong(Song $song) {
+        public function insertSong(Song $song): bool {
             $songsRef = $this->realtimeDatabase->getReference('/stupifyDB/songs');
             $ret = $songsRef->getChild($song->id)->set($song);
-            if ($ret !== null) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return $ret !== null;
         }
 
-        public function getSongs() {
+        public function getSongs(): array {
             $songsRef = $this->realtimeDatabase->getReference('/stupifyDB/songs');
             $dbSongs = $songsRef->getValue();
             $songs = [];
@@ -65,23 +72,18 @@
             return $songs;
         }
 
-        public function insertCategory(Category $category) {
+        public function insertCategory(Category $category): bool {
             $catsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
             $ret = $catsRef->getChild($category->id)->set($category);
-            if ($ret !== null) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return $ret !== null;
         }
 
-        public function pushSongCat(SongCat $sc) {
+        public function pushSongCat(SongCat $sc): void {
             $scRef = $this->realtimeDatabase->getReference('/stupifyDB/song-cat');
             $scRef->push($sc);
         }
 
-        public function getCategories() {
+        public function getCategories(): array {
             $catsRef = $this->realtimeDatabase->getReference('/stupifyDB/categories');
             $dbCats = $catsRef->getValue();
             $categories = [];
@@ -96,19 +98,19 @@
             return $categories;
         }
 
-        public function getCategory($categoryId) {
+        public function getCategory($categoryId): Category {
             $cat = $this->realtimeDatabase->getReference('/stupifyDB/categories/'.$categoryId)->getValue();
             $category = new Category($cat['id'], $cat['category']);
             return $category;
         }
 
-        public function getSong($songId) {
+        public function getSong($songId): Song {
             $sng = $this->realtimeDatabase->getReference('/stupifyDB/songs/'.$songId)->getValue();
             $song = new Song($sng['id'], $sng['title'], $sng['author'], $sng['photo'], $sng['audiofile']);
             return $song;
         }
 
-        public function getSongCats() {
+        public function getSongCats(): array {
             $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
             $songCats = [];
             foreach ($scs as $key => $sc) {
@@ -121,7 +123,7 @@
             return $songCats;
         }
 
-        public function deleteSongCatsFromCat($categoryId) {
+        public function deleteSongCatsFromCat($categoryId): void {
             $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
             foreach ($scs as $key => $sc) {
                 if ($sc['catId'] == $categoryId) {
@@ -130,7 +132,7 @@
             }
         }
 
-        public function deleteSongCatsFromSong($songId) {
+        public function deleteSongCatsFromSong($songId): void {
             $scs = $this->realtimeDatabase->getReference('/stupifyDB/song-cat')->getValue();
             foreach ($scs as $key => $sc) {
                 if ($sc['songId'] == $songId) {
@@ -139,12 +141,12 @@
             }
         }
 
-        public function deleteCategory($categoryId) {
+        public function deleteCategory($categoryId): void {
             $this->deleteSongCatsFromCat($categoryId);
             $this->realtimeDatabase->getReference('/stupifyDB/categories/'.$categoryId)->remove();
         }
 
-        public function deleteSong($songId) {
+        public function deleteSong($songId): void {
             $this->deleteSongCatsFromSong($songId);
             $this->realtimeDatabase->getReference('/stupifyDB/songs/'.$songId)->remove();
         }

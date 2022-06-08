@@ -16,6 +16,8 @@
 
     if (!isset($_SESSION) || !$_SESSION['sesion_iniciada']){
         echo '<h1 style="color:red;">ERROR: Acceso prohibido.</h1>';
+        echo '<h3>Redirigiendo a la página principal...</h3>';
+        header("Refresh:2; url=../");
     }
     else {
         require_once '../model/classes.php';
@@ -39,46 +41,47 @@
         echo '
             <div id="header" class="border-bottom">
                 <form method="GET" action="admin.php" enctype="multipart/form-data" id="form-header">
+                <img src="../img/stupify_logo_sombra.png" id="logo-header" alt="">
         ';
 
         if ($chosen_tab == 'diagnostic') {
             echo '
-                <button type="submit" class="btn btn-warning" name="chosen_tab" value="diagnostic">Diagnóstico</button>
+                <button type="submit" class="btn btn-primary btn-lg" name="chosen_tab" value="diagnostic">Diagnóstico</button>
             ';
         }
         else {
             echo '
-                <button type="submit" class="btn btn-primary" name="chosen_tab" value="diagnostic">Diagnóstico</button>
+                <button type="submit" class="btn btn-light btn-lg" name="chosen_tab" value="diagnostic">Diagnóstico</button>
             ';
         }
         if ($chosen_tab == 'upload') {
             echo '
-                <button type="submit" class="btn btn-warning" name="chosen_tab" value="upload">Subida</button>
+                <button type="submit" class="btn btn-primary btn-lg" name="chosen_tab" value="upload">Subida</button>
             ';
         }
         else {
             echo '
-                <button type="submit" class="btn btn-primary" name="chosen_tab" value="upload">Subida</button>
+                <button type="submit" class="btn btn-light btn-lg" name="chosen_tab" value="upload">Subida</button>
             ';
         }
         if ($chosen_tab == 'songs') {
             echo '
-                <button type="submit" class="btn btn-warning" name="chosen_tab" value="songs">Canciones</button>
+                <button type="submit" class="btn btn-primary btn-lg" name="chosen_tab" value="songs">Canciones</button>
             ';
         }
         else {
             echo '
-                <button type="submit" class="btn btn-primary" name="chosen_tab" value="songs">Canciones</button>
+                <button type="submit" class="btn btn-light btn-lg" name="chosen_tab" value="songs">Canciones</button>
             ';
         }
         if ($chosen_tab == 'categories') {
             echo '
-                <button type="submit" class="btn btn-warning" name="chosen_tab" value="categories">Categorías</button>
+                <button type="submit" class="btn btn-primary btn-lg" name="chosen_tab" value="categories">Categorías</button>
             ';
         }
         else {
             echo '
-                <button type="submit" class="btn btn-primary" name="chosen_tab" value="categories">Categorías</button>
+                <button type="submit" class="btn btn-light btn-lg" name="chosen_tab" value="categories">Categorías</button>
             ';
         }
 
@@ -91,6 +94,7 @@
         echo '
             <div id="main" class="border-bottom">
                 <div id="msg"> ' . $msg . ' </div>
+                <div id="inner-main" class="border rounded">
         ';
         switch ($chosen_tab) {
             case 'diagnostic':
@@ -114,6 +118,7 @@
                 break;
         }
         echo '
+                </div>
             </div>
             <div id="footer">
             <span>Developed by Sergio Díez García © 2022</span>

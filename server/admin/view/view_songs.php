@@ -5,11 +5,11 @@ $songCats = $db->getSongCats();
 echo '
 <h1 class="mb-3">Listado de canciones</h1>
 <form method="POST" action="../controller/song_actions.php" enctype="multipart/form-data" id="form-songs">
-    <div class="input-group border" id="form-songs-list">
+    <div class="input-group border rounded" id="form-songs-list">
 ';
 foreach ($songs as $song) {
     echo '
-    <div id="song" class="border">
+    <div id="song" class="border rounded">
         <img src="../img/'.$song->photo.'">
         <div id="song-data">
             <span id="song-data-title">'.$song->title.'</span>
@@ -24,12 +24,12 @@ foreach ($songs as $song) {
             $category = $db->getCategory($songCat->catId);
             if ($category != null) {
                 $uncategorized = false;
-                echo '<div id="song-category" class="border">'.$category->category.'</div>';
+                echo '<div id="song-category" class="border rounded">'.$category->category.'</div>';
             }
         }
     }
     if ($uncategorized) {
-        echo '<div id="song-category" class="border border-danger text-danger">Sin categorizar</div>';
+        echo '<div id="song-category" class="border rounded border rounded-danger text-danger">Sin categorizar</div>';
     }
     
     echo '
