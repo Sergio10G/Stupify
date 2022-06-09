@@ -11,10 +11,11 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <div id="container">
-        <div id="header" class="border-bottom">
-            <h1 class="text-center">Añadir categoría a diferentes canciones</h1>
+        <div id="header" class="border-bottom header-secondary">
+            <img src="../img/stupify_logo_sombra.png" alt="logo" id="logo-header">
         </div>
         <div id="main" class="border-bottom">
+            <div id="inner-main" class="border rounded mt-5">
 <?php
 
 session_start();
@@ -47,41 +48,42 @@ else {
         $songs = $db->getSongs();
 
         echo '
-        <h1 class="mb-3">Categoría '.$category->category.'</h1>
-        <form method="POST" action="../controller/add_categories_to_songs.php" enctype="multipart/form-data">
-            <div class="row">
-                <label class="form-label">Canciones</label>
-                <div class="input-group border rounded mb-3" id="song-list">
+            <h1 class="mb-3">Categoría '.$category->category.'</h1>
+            <form method="POST" action="../controller/add_categories_to_songs.php" enctype="multipart/form-data">
+                <div class="row">
+                    <label class="form-label">Canciones</label>
+                    <div class="input-group border rounded mb-3" id="song-list">
         ';
         foreach ($songs as $song) {
             echo '
-                    <div id="song-item">
-                        <label>'.$song->author.' - '.$song->title.'</label>
-                        <input class="form-check-input" name="songs[]" type="checkbox" value="'.$song->id.'"';
-                        if (songHasCategory($song->id, $songCats, intval($categoryId))) {
-                            echo 'checked';
-                        }
-                        echo '>
-                    </div>
+                        <div id="song-item">
+                            <label>'.$song->author.' - '.$song->title.'</label>
+                            <input class="form-check-input" name="songs[]" type="checkbox" value="'.$song->id.'"';
+                            if (songHasCategory($song->id, $songCats, intval($categoryId))) {
+                                echo 'checked';
+                            }
+                            echo '>
+                        </div>
             ';
         }
         echo '
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <input type="hidden" name="categoryId" value="'.$category->id.'">
-                <button type="submit" class="btn btn-success" name="submit" value="1">Actualizar categorías</button>
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-warning" name="submit" value="2">Volver</button>
-            </div>
-        </form>
+                <div class="row mb-3">
+                    <input type="hidden" name="categoryId" value="'.$category->id.'">
+                    <button type="submit" class="btn btn-success" name="submit" value="1">Actualizar canciones</button>
+                </div>
+                <div class="row">
+                    <button type="submit" class="btn btn-warning" name="submit" value="2">Volver</button>
+                </div>
+            </form>
         ';
     }
     else {
         echo '<h1 style="color:red;">ERROR: La categoría '.$categoryId.' no existe.</h1>';
     }
     echo '
+        </div>
     </div>
         <div id="footer">
             <span>Developed by Sergio Díez García © 2022</span>

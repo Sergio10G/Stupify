@@ -48,6 +48,14 @@ body {
     background-color: white;
 }
 
+.header-secondary {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
 #form-header {
     height: 100%;
 
@@ -128,7 +136,9 @@ body {
 }
 
 #song-item {
-    width: 25%;
+    max-width: 45%;
+    min-width: 25%;
+    width: max-content;
     height: 2em;
 
     display: flex;
